@@ -1,0 +1,7 @@
+.project
+.classpath
+.settings/
+/bin
+/logs
+/resources/risultati
+/test-scenario

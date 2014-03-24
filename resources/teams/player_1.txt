@@ -1,0 +1,25 @@
+BUFFON Gianluigi,T
+STORARI Marco,P,1
+MANNINGER Alexander
+ZACCARDO Cristian,T
+LICHTSTEINER Stephan,P,2
+SILVESTRE Matias,T
+ACERBI Francesco
+CASSETTI Marco
+DOMIZZI Maurizio,T
+COMOTTO Gianluca,P,3
+CAPUANO Ciro
+ARMERO Pablo Estifer,T
+LEDESMA Cristian,T
+BEHRAMI Valon,P,5
+CONSTANT Kevin
+PADOIN Simone
+MIGLIACCIO Giulio,T
+VIDAL Arturo,T
+KUCKA Juray,P,4
+KLOSE Miroslav,T
+GILARDINO Alberto,T
+MORIMOTO Takayuki,P,6
+GIOVINCO Sebastian,T
+CARACCIOLO Andrea,P,7
+FLOCCARI Sergio

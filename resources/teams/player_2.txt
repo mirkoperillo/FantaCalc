@@ -1,0 +1,25 @@
+AGAZZI Micheal,P,1
+PEGOLO Gianluca
+FREY Sebastian,T
+RANOCCHIA Andrea,P,2
+NAGATOMO Yuto,T
+PEREIRA Alvaro,T
+CASTAN Leandro,T
+ROMAGNOLI Simone,P,3
+GARICS Gyorgy
+CACERES Martin
+FREY Nicolas
+COSSU Andrea,P,5
+MARCHISIO Claudio,T
+LULIC Senad,T
+LODI Francesco,T
+CAMBIASSO Esteban
+GUARIN Fredy,T
+TACHTSIDIS Panagiotis,T
+NAINGGOLAN Radja,P,1
+DI NATALE Antonio
+BORRIELLO Marco,T
+PALACIO Rodrigo
+JOVETIC Stevan,T
+KOZAK Libor,P,6
+GABBIADINI Manolo,P,7

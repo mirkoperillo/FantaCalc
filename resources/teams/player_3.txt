@@ -1,0 +1,26 @@
+MARCHETTI Federico,T
+FREY Sebastian,P,1
+SORRENTINO Stefano
+ABATE Ignazio,T
+CANINI Michele,P,2
+CACARES Martin,T
+ASTTORI Davide
+SPOLLI Nicolas,P,3
+LULIC Senad
+CASSANI Mattia,T
+JUAN Silveira dos Santos
+VELOSO Miguel,P,5
+MORALEZ Maxi,T
+MARTINEZ Jorge Andres
+DIAMANTI Alessandro
+CANDREVA Antonio,T
+IBARBO Victor,P,6
+CIGARINI Luca,T
+RAMIREZ Gaston,T
+MILITO Diego,P,7
+NENE' Anderson Miguel,T
+PINILLA Mauricio
+MICCOLI Fabrizio,P,6
+OSVALDO Pablo Daniel,T
+ROBINHO Rson de Souza,T
+
