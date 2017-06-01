@@ -65,10 +65,10 @@ public class Main {
 		}
 
 		TeamLoader tl = new TeamLoader();
-		TeamCompleter tc = new TeamCompleter();
+		TeamManager tc = new TeamManager();
 		List<Player> list = tl.read(new File(pathFile));
 		list = tc.completeTeam(list, pathVoti);
-		Float total = tc.calculate(list);
+		Float total = tc.calculateScore(list);
 		File directoryOut = new File(path + File.separator + "resources"
 				+ File.separator + prop.getProperty("nome_directory_result"));
 		File o = null;

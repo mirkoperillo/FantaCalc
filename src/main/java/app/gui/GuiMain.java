@@ -52,7 +52,7 @@ import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
 
-import app.TeamCompleter;
+import app.TeamManager;
 import app.model.Player;
 
 public class GuiMain extends JFrame implements ActionListener, ItemListener {
@@ -328,9 +328,9 @@ public class GuiMain extends JFrame implements ActionListener, ItemListener {
 			logger.error(e2);
 		}
 
-		TeamCompleter tc = new TeamCompleter();
+		TeamManager tc = new TeamManager();
 		list = tc.completeTeam(list, pathVoti);
-		Float total = tc.calculate(list);
+		Float total = tc.calculateScore(list);
 		File directoryOut = new File(path + File.separator + "resources"
 				+ File.separator + prop.getProperty("nome_directory_result"));
 		File o = null;

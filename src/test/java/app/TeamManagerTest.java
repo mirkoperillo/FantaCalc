@@ -10,34 +10,35 @@ import org.junit.Test;
 import app.model.Player;
 import app.model.PlayerReport;
 
-public class TeamCompleterTest {
+public class TeamManagerTest {
 
 	/*
 	 * TEST 1
 	 */
 	@Test
 	public void calculate() {
-		TeamCompleter completer = new TeamCompleter();
-		Float score = completer.calculate(setupForTest1());
+		TeamManager completer = new TeamManager();
+		Float score = completer.calculateScore(setupForTest1());
 		Assert.assertEquals(11f, score, 0f);
 	}
 
-	@Test(expected = IndexOutOfBoundsException.class)
+	@Test
 	public void emptyTeam() {
-		TeamCompleter completer = new TeamCompleter();
-		completer.calculate(new ArrayList<>());
+		TeamManager completer = new TeamManager();
+		Assert.assertEquals(0f, completer.calculateScore(new ArrayList<>()), 0);
 	}
 
-	@Test(expected = IndexOutOfBoundsException.class)
+	@Test
 	public void teamSizeLessThen11() {
-		TeamCompleter completer = new TeamCompleter();
-		completer.calculate(teamSize1());
+		TeamManager completer = new TeamManager();
+		float score = completer.calculateScore(teamSize1());
+		Assert.assertEquals(1f, score, 0f);
 	}
 
 	@Test
 	public void entraDallaPanchina() {
-		TeamCompleter completer = new TeamCompleter();
-		Float score = completer.calculate(teamEntraDallaPanchina());
+		TeamManager completer = new TeamManager();
+		Float score = completer.calculateScore(teamEntraDallaPanchina());
 		Assert.assertEquals(12f, score, 0f);
 
 	}
@@ -49,6 +50,7 @@ public class TeamCompleterTest {
 			Player p1 = new Player();
 			p1.setGlobalVote(1);
 			p1.setHasPlayed(true);
+			p1.setTitolare(true);
 			result.add(p1);
 		});
 
@@ -56,6 +58,7 @@ public class TeamCompleterTest {
 		p1.setGlobalVote(0); // nonostante non abbia giocato un eventuale
 								// punteggio nel global vote viene aggiunto
 		p1.setHasPlayed(false);
+		p1.setTitolare(true);
 		p1.setRole((short) 1); // defender
 		result.add(p1);
 
@@ -67,6 +70,7 @@ public class TeamCompleterTest {
 		panchina.setGlobalVote(2d);
 		panchina.setHasPlayed(true);
 		panchina.setRole((short) 1);
+		panchina.setTitolare(false);
 		result.add(panchina);
 
 		IntStream.range(0, 6).forEach(i -> {
@@ -86,6 +90,7 @@ public class TeamCompleterTest {
 			Player p1 = new Player();
 			p1.setGlobalVote(1);
 			p1.setHasPlayed(true);
+			p1.setTitolare(true);
 			result.add(p1);
 		});
 
@@ -99,6 +104,7 @@ public class TeamCompleterTest {
 			Player p1 = new Player();
 			p1.setGlobalVote(1);
 			p1.setHasPlayed(true);
+			p1.setTitolare(true);
 			result.add(p1);
 		});
 
