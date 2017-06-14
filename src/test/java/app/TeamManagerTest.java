@@ -49,7 +49,9 @@ public class TeamManagerTest {
 		IntStream.range(0, 10).forEach(i -> {
 			Player p1 = new Player();
 			p1.setGlobalVote(1);
-			p1.setHasPlayed(true);
+			PlayerReport matchReport = new PlayerReport();
+			matchReport.setHasPlayed(true);
+			p1.setMatchReport(matchReport);
 			p1.setTitolare(true);
 			result.add(p1);
 		});
@@ -57,7 +59,6 @@ public class TeamManagerTest {
 		Player p1 = new Player();
 		p1.setGlobalVote(0); // nonostante non abbia giocato un eventuale
 								// punteggio nel global vote viene aggiunto
-		p1.setHasPlayed(false);
 		p1.setTitolare(true);
 		p1.setRole((short) 1); // defender
 		result.add(p1);
@@ -65,10 +66,10 @@ public class TeamManagerTest {
 		// substitutes must to be 7
 		Player panchina = new Player();
 		PlayerReport playReport = new PlayerReport();
+		playReport.setHasPlayed(true);
 		playReport.setVote(2d);
 		panchina.setMatchReport(playReport); // score deve essere popolato
 		panchina.setGlobalVote(2d);
-		panchina.setHasPlayed(true);
 		panchina.setRole((short) 1);
 		panchina.setTitolare(false);
 		result.add(panchina);
@@ -76,7 +77,6 @@ public class TeamManagerTest {
 		IntStream.range(0, 6).forEach(i -> {
 			Player p = new Player();
 			p.setGlobalVote(1);
-			p.setHasPlayed(false);
 			result.add(p);
 		});
 
@@ -89,7 +89,9 @@ public class TeamManagerTest {
 		IntStream.range(0, 1).forEach(i -> {
 			Player p1 = new Player();
 			p1.setGlobalVote(1);
-			p1.setHasPlayed(true);
+			PlayerReport matchReport = new PlayerReport();
+			matchReport.setHasPlayed(true);
+			p1.setMatchReport(matchReport);
 			p1.setTitolare(true);
 			result.add(p1);
 		});
@@ -103,7 +105,9 @@ public class TeamManagerTest {
 		IntStream.range(0, 11).forEach(i -> {
 			Player p1 = new Player();
 			p1.setGlobalVote(1);
-			p1.setHasPlayed(true);
+			PlayerReport matchReport = new PlayerReport();
+			matchReport.setHasPlayed(true);
+			p1.setMatchReport(matchReport);
 			p1.setTitolare(true);
 			result.add(p1);
 		});
