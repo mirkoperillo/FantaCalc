@@ -23,7 +23,6 @@ public class Player {
 	private short role;
 	private String squadra;
 	private boolean titolare;
-	private boolean hasPlayed;
 	private boolean hasIncome;
 	private double globalVote;
 	private PlayerReport matchReport;
@@ -42,11 +41,7 @@ public class Player {
 	}
 
 	public boolean isHasPlayed() {
-		return hasPlayed;
-	}
-
-	public void setHasPlayed(boolean hasPlayed) {
-		this.hasPlayed = hasPlayed;
+		return matchReport != null ? matchReport.hasPlayed() : false;
 	}
 
 	public PlayerReport getMatchReport() {
@@ -84,15 +79,15 @@ public class Player {
 	public String toString() {
 		String nl = System.getProperty("line.separator");
 		String ret = "";
-		if (!hasPlayed && titolare) {
+		if (!isHasPlayed() && titolare) {
 			ret = "ESCE: ";
 		} else if (hasIncome) {
 			ret = "ENTRA: ";
 		}
-		if (hasPlayed) {
-			ret += name + " (" + squadra + ") ->" + globalVote + nl;
-			ret += "\t voto: " + matchReport.toString() + nl + nl;
-		}
+		// if (isHasPlayed()) {
+		ret += name + " (" + squadra + ") ->" + globalVote + nl;
+		ret += "\t voto: " + matchReport.toString() + nl + nl;
+		// }
 		return ret;
 
 	}

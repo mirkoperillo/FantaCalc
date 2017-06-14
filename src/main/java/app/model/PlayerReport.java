@@ -28,6 +28,15 @@ public class PlayerReport {
 	private int rigoreParato;
 	private int rigoreSbagliato;
 	private int rigoreSegnato;
+	private boolean hasPlayed;
+
+	public void setHasPlayed(boolean hasPlayed) {
+		this.hasPlayed = hasPlayed;
+	}
+
+	public boolean hasPlayed() {
+		return hasPlayed;
+	}
 
 	public Integer getRigoreParato() {
 		return rigoreParato;
@@ -113,12 +122,9 @@ public class PlayerReport {
 	}
 
 	public String toString() {
-		return getVote() + " ; g: " + getGoals() + " ; ag: " + getAutogoals()
-				+ " ; gs: " + getGoalsCatch() + "; ass: " + getAssist()
-				+ " ; amm: " + ((isYellowCard()) ? "Y" : "N") + " ; esp: "
-				+ ((isRedCard()) ? "Y" : "N") + "; rp: " + getRigoreParato()
-				+ "; rse: " + getRigoreSegnato() + "; rsb: "
-				+ getRigoreSbagliato();
+		return getVote() + " ; g: " + getGoals() + " ; ag: " + getAutogoals() + " ; gs: " + getGoalsCatch() + "; ass: "
+				+ getAssist() + " ; amm: " + ((isYellowCard()) ? "Y" : "N") + " ; esp: " + ((isRedCard()) ? "Y" : "N")
+				+ "; rp: " + getRigoreParato() + "; rse: " + getRigoreSegnato() + "; rsb: " + getRigoreSbagliato();
 	}
 
 }
