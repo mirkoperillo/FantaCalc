@@ -1,5 +1,12 @@
 package app.model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
+import org.apache.log4j.Logger;
+
 /**
  * Copyright (C) 2008 Mirko Perillo
  * 
@@ -18,6 +25,23 @@ package app.model;
  * FantaCalc. If not, see <http://www.gnu.org/licenses/>.
  */
 public class Player {
+
+	private static final String pathBonusProp = System.getProperty("user.dir") + "/config/bonus.properties";
+
+	private static final Logger logger = Logger.getLogger(Player.class);
+
+	private static final Properties propBonus = new Properties();
+
+	static {
+		try {
+			propBonus.load(new FileInputStream(pathBonusProp));
+		} catch (FileNotFoundException e2) {
+			logger.error(e2);
+		} catch (IOException e2) {
+			logger.error(e2);
+		}
+	}
+
 	private short idCode;
 	private String name;
 	private short role;
@@ -33,6 +57,36 @@ public class Player {
 	}
 
 	public double getGlobalVote() {
+		if (role == 0 && isHasPlayed() && matchReport.getVote() == 0) {
+			matchReport.setVote(6.0);
+		}
+
+		// bonus-malus values
+		Double bonusAmmonizione = new Double(propBonus.getProperty("ammonizione"));
+		Double bonusEspulsione = new Double(propBonus.getProperty("espulsione"));
+		Double bonusAutogoal = new Double(propBonus.getProperty("autogoal"));
+		Double bonusGoalSubito = new Double(propBonus.getProperty("goal_subito"));
+		Double bonusRigoreSbagliato = new Double(propBonus.getProperty("rigore_sbagliato"));
+		Double bonusGoalSegnato = new Double(propBonus.getProperty("goal_segnato"));
+		Double bonusAssist = new Double(propBonus.getProperty("assist"));
+		Double bonusPortiereImbattuto = new Double(propBonus.getProperty("portiere_imbattuto"));
+		Double bonusRigoreSegnato = new Double(propBonus.getProperty("rigore_segnato"));
+		Double bonusRigoreParato = new Double(propBonus.getProperty("rigore_parato"));
+
+		Double globalVote = matchReport.getVote() + (matchReport.getGoals()) * bonusGoalSegnato
+				+ ((matchReport.isYellowCard()) ? bonusAmmonizione : 0)
+				+ ((matchReport.isRedCard()) ? bonusEspulsione : 0) + matchReport.getGoalsCatch() * bonusGoalSubito
+				+ matchReport.getAssist() * bonusAssist + matchReport.getAutogoals() * bonusAutogoal
+				+ ((role == 0 && matchReport.getGoalsCatch() == 0) ? bonusPortiereImbattuto : 0)
+				+ matchReport.getRigoreParato() * bonusRigoreParato
+				+ matchReport.getRigoreSegnato() * bonusRigoreSegnato
+				+ matchReport.getRigoreSbagliato() * bonusRigoreSbagliato;
+
+		// giocatore espulso s.v = 4
+		if (isHasPlayed() && matchReport.getVote() == 0 && matchReport.isRedCard()) {
+			globalVote = 4.0;
+		}
+
 		return globalVote;
 	}
 

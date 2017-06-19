@@ -1,6 +1,7 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -17,30 +18,39 @@ public class TeamManagerTest {
 	 */
 	@Test
 	public void calculate() {
-		TeamManager completer = new TeamManager();
+		TeamManager completer = new TeamManager(new DummieMatchManager());
 		Float score = completer.calculateScore(setupForTest1());
 		Assert.assertEquals(11f, score, 0f);
 	}
 
 	@Test
 	public void emptyTeam() {
-		TeamManager completer = new TeamManager();
+		TeamManager completer = new TeamManager(new DummieMatchManager());
 		Assert.assertEquals(0f, completer.calculateScore(new ArrayList<>()), 0);
 	}
 
 	@Test
 	public void teamSizeLessThen11() {
-		TeamManager completer = new TeamManager();
+		TeamManager completer = new TeamManager(new DummieMatchManager());
 		float score = completer.calculateScore(teamSize1());
 		Assert.assertEquals(1f, score, 0f);
 	}
 
 	@Test
 	public void entraDallaPanchina() {
-		TeamManager completer = new TeamManager();
+		TeamManager completer = new TeamManager(new DummieMatchManager());
 		Float score = completer.calculateScore(teamEntraDallaPanchina());
 		Assert.assertEquals(12f, score, 0f);
 
+	}
+
+	@Test
+	public void playerGlobalVote() {
+		TeamManager manager = new TeamManager(new TestMatchDataManager());
+		Player player = new Player();
+		player.setRole((short) 1);
+		List<Player> result = manager.completeTeam(Arrays.asList(player), null);
+		Assert.assertEquals(12.5f, result.get(0).getGlobalVote(), 0);
 	}
 
 	private List<Player> teamEntraDallaPanchina() {
@@ -113,5 +123,30 @@ public class TeamManagerTest {
 		});
 
 		return result;
+	}
+
+	public class TestMatchDataManager implements MatchDataManager {
+
+		@Override
+		public PlayerReport getTabellino(Player player) {
+			PlayerReport matchReport = new PlayerReport();
+			matchReport.setHasPlayed(true);
+			matchReport.setVote(6d);
+			matchReport.setAssist(1);
+			matchReport.setGoals(2);
+			matchReport.setYellowCard(true);
+			return matchReport;
+		}
+
+	}
+
+	private class DummieMatchManager implements MatchDataManager {
+
+		@Override
+		public PlayerReport getTabellino(Player player) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 	}
 }

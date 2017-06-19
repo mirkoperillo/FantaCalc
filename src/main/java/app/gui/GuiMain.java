@@ -52,6 +52,7 @@ import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
 
+import app.FileMatchDataManager;
 import app.TeamManager;
 import app.model.Player;
 
@@ -98,8 +99,7 @@ public class GuiMain extends JFrame implements ActionListener, ItemListener {
 		squadre.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				squadraAttiva = (String) ((JComboBox) arg0.getSource())
-						.getSelectedItem();
+				squadraAttiva = (String) ((JComboBox) arg0.getSource()).getSelectedItem();
 				formazione.removeAll();
 				initPanelloFormazione(formazione);
 				formazione.revalidate();
@@ -157,8 +157,7 @@ public class GuiMain extends JFrame implements ActionListener, ItemListener {
 
 	private JPanel initPanelloFormazione(JPanel toUpdate) {
 
-		String rosaPath = System.getProperty("user.dir") + "/"
-				+ "resources/teams" + "/" + squadraAttiva + ".txt";
+		String rosaPath = System.getProperty("user.dir") + "/" + "resources/teams" + "/" + squadraAttiva + ".txt";
 		try {
 			BufferedReader bread = new BufferedReader(new FileReader(rosaPath));
 			String line = null;
@@ -188,8 +187,7 @@ public class GuiMain extends JFrame implements ActionListener, ItemListener {
 				buttonGroup.add(panchinaButton);
 				buttonGroup.add(tribunaButton);
 
-				JComboBox box = new JComboBox(new Integer[] { 1, 2, 3, 4, 5, 6,
-						7 });
+				JComboBox box = new JComboBox(new Integer[] { 1, 2, 3, 4, 5, 6, 7 });
 
 				box.addItemListener(this);
 
@@ -230,8 +228,7 @@ public class GuiMain extends JFrame implements ActionListener, ItemListener {
 	}
 
 	private List<String> getTeams() {
-		String teamsFolder = System.getProperty("user.dir")
-				+ "/resources/teams";
+		String teamsFolder = System.getProperty("user.dir") + "/resources/teams";
 		File folder = new File(teamsFolder);
 		List<String> teams = new ArrayList<String>();
 		for (String team : folder.list()) {
@@ -244,19 +241,14 @@ public class GuiMain extends JFrame implements ActionListener, ItemListener {
 	private void save(Writer w) throws Exception {
 		int index = 0;
 		Component c = null;
-		while (index < formazione.getComponentCount()
-				&& (c = formazione.getComponent(index)) != null) {
+		while (index < formazione.getComponentCount() && (c = formazione.getComponent(index)) != null) {
 			String giocatore = ((JLabel) c).getText();
-			String schierato = ((JRadioButton) formazione
-					.getComponent(index + 1)).isSelected() ? "T" : "";
-			schierato = ((JRadioButton) formazione.getComponent(index + 2))
-					.isSelected() ? "P" : schierato;
-			schierato = ((JRadioButton) formazione.getComponent(index + 3))
-					.isSelected() ? "" : schierato;
+			String schierato = ((JRadioButton) formazione.getComponent(index + 1)).isSelected() ? "T" : "";
+			schierato = ((JRadioButton) formazione.getComponent(index + 2)).isSelected() ? "P" : schierato;
+			schierato = ((JRadioButton) formazione.getComponent(index + 3)).isSelected() ? "" : schierato;
 
-			String posto = ((JRadioButton) formazione.getComponent(index + 2))
-					.isSelected() ? ((JComboBox) formazione
-					.getComponent(index + 4)).getSelectedItem().toString() : "";
+			String posto = ((JRadioButton) formazione.getComponent(index + 2)).isSelected()
+					? ((JComboBox) formazione.getComponent(index + 4)).getSelectedItem().toString() : "";
 			w.write(giocatore + (schierato.length() > 0 ? "," + schierato : "")
 					+ (posto.length() > 0 ? "," + posto : "") + "\n");
 			index = index + 5;
@@ -275,26 +267,22 @@ public class GuiMain extends JFrame implements ActionListener, ItemListener {
 		Element[] tit = new Element[11];
 		Element[] pan = new Element[7];
 		try {
-			FileWriter fwrite = new FileWriter(System.getProperty("user.dir")
-					+ "/" + "resources" + "/" + squadraAttiva + ".txt");
+			FileWriter fwrite = new FileWriter(
+					System.getProperty("user.dir") + "/" + "resources" + "/" + squadraAttiva + ".txt");
 			save(fwrite);
 		} catch (Exception e) {
 			logger.error("Error writing settings of teams");
 		}
 
-		while (index < formazione.getComponentCount()
-				&& (c = formazione.getComponent(index)) != null) {
+		while (index < formazione.getComponentCount() && (c = formazione.getComponent(index)) != null) {
 			if (c instanceof JLabel) {
-				if (((JRadioButton) formazione.getComponent(index + 1))
-						.isSelected()) {
+				if (((JRadioButton) formazione.getComponent(index + 1)).isSelected()) {
 					tit[titIndex] = new Element(((JLabel) c).getText(), -1);
 					titIndex++;
 				}
-				if (((JRadioButton) formazione.getComponent(index + 2))
-						.isSelected()) {
+				if (((JRadioButton) formazione.getComponent(index + 2)).isSelected()) {
 					pan[panIndex] = new Element(((JLabel) c).getText(),
-							(Integer) ((JComboBox) formazione
-									.getComponent(index + 4)).getSelectedItem());
+							(Integer) ((JComboBox) formazione.getComponent(index + 4)).getSelectedItem());
 					panIndex++;
 				}
 			}
@@ -320,19 +308,18 @@ public class GuiMain extends JFrame implements ActionListener, ItemListener {
 		String fileName = squadraAttiva + ".txt";
 		Properties prop = new Properties();
 		try {
-			prop.load(new FileInputStream(path + File.separator + "config"
-					+ File.separator + "config.properties"));
+			prop.load(new FileInputStream(path + File.separator + "config" + File.separator + "config.properties"));
 		} catch (FileNotFoundException e2) {
 			logger.error(e2);
 		} catch (IOException e2) {
 			logger.error(e2);
 		}
 
-		TeamManager tc = new TeamManager();
+		TeamManager tc = new TeamManager(new FileMatchDataManager(pathVoti));
 		list = tc.completeTeam(list, pathVoti);
 		Float total = tc.calculateScore(list);
-		File directoryOut = new File(path + File.separator + "resources"
-				+ File.separator + prop.getProperty("nome_directory_result"));
+		File directoryOut = new File(
+				path + File.separator + "resources" + File.separator + prop.getProperty("nome_directory_result"));
 		File o = null;
 		boolean createDirectory = false;
 		if (!directoryOut.exists() || directoryOut.isFile()) {
@@ -347,8 +334,7 @@ public class GuiMain extends JFrame implements ActionListener, ItemListener {
 			logger.error(e);
 		}
 		try {
-			out.write("g = goal segnati; ag = autogoal; gs = goal subiti; ass = assist; amm = ammonizione;"
-					+ newline
+			out.write("g = goal segnati; ag = autogoal; gs = goal subiti; ass = assist; amm = ammonizione;" + newline
 					+ "esp = espulsione; rp = rigore parato; rse = rigore segnato; rsb = rigore sbagliato");
 			out.write(newline + newline);
 			out.write("TOTAL SCORE: " + total + newline);
@@ -392,12 +378,9 @@ public class GuiMain extends JFrame implements ActionListener, ItemListener {
 		if (ie.getStateChange() == ItemEvent.ITEM_STATE_CHANGED) {
 			int index = getComponetIndex(source);
 			if (index != -1) {
-				((JRadioButton) source.getParent().getComponent(index - 3))
-						.setSelected(false);
-				((JRadioButton) source.getParent().getComponent(index - 2))
-						.setSelected(true);
-				((JRadioButton) source.getParent().getComponent(index - 1))
-						.setSelected(false);
+				((JRadioButton) source.getParent().getComponent(index - 3)).setSelected(false);
+				((JRadioButton) source.getParent().getComponent(index - 2)).setSelected(true);
+				((JRadioButton) source.getParent().getComponent(index - 1)).setSelected(false);
 				this.validate();
 			}
 		}

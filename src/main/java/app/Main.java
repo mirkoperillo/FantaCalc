@@ -40,24 +40,21 @@ public class Main {
 	public static void main(String[] args) {
 
 		if (args.length < 2) {
-			System.out
-					.println("java -jar fantacalculator.jar fileFormazione fileVoti");
+			System.out.println("java -jar fantacalculator.jar fileFormazione fileVoti");
 			System.exit(-1);
 		}
 		String newline = System.getProperty("line.separator");
 		String path = System.getProperty("user.dir");
 		String pathVoti = args[1];
 		String pathFile = args[0];
-		String fileName = pathFile.substring(
-				pathFile.lastIndexOf(File.separator) + 1, pathFile.length());
+		String fileName = pathFile.substring(pathFile.lastIndexOf(File.separator) + 1, pathFile.length());
 
 		logger.debug("File Formazione : " + pathFile);
 		logger.debug("File Voti : " + pathVoti);
 
 		Properties prop = new Properties();
 		try {
-			prop.load(new FileInputStream(path + File.separator + "config"
-					+ File.separator + "config.properties"));
+			prop.load(new FileInputStream(path + File.separator + "config" + File.separator + "config.properties"));
 		} catch (FileNotFoundException e2) {
 			logger.error(e2);
 		} catch (IOException e2) {
@@ -65,12 +62,12 @@ public class Main {
 		}
 
 		TeamLoader tl = new TeamLoader();
-		TeamManager tc = new TeamManager();
+		TeamManager tc = new TeamManager(new FileMatchDataManager(fileName));
 		List<Player> list = tl.read(new File(pathFile));
 		list = tc.completeTeam(list, pathVoti);
 		Float total = tc.calculateScore(list);
-		File directoryOut = new File(path + File.separator + "resources"
-				+ File.separator + prop.getProperty("nome_directory_result"));
+		File directoryOut = new File(
+				path + File.separator + "resources" + File.separator + prop.getProperty("nome_directory_result"));
 		File o = null;
 		boolean createDirectory = false;
 		if (!directoryOut.exists() || directoryOut.isFile()) {
@@ -85,8 +82,7 @@ public class Main {
 			logger.error(e);
 		}
 		try {
-			out.write("g = goal segnati; ag = autogoal; gs = goal subiti; ass = assist; amm = ammonizione;"
-					+ newline
+			out.write("g = goal segnati; ag = autogoal; gs = goal subiti; ass = assist; amm = ammonizione;" + newline
 					+ "esp = espulsione; rp = rigore parato; rse = rigore segnato; rsb = rigore sbagliato");
 			out.write(newline + newline);
 			out.write("TOTAL SCORE: " + total + newline);
