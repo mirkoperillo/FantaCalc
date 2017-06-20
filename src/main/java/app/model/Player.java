@@ -139,7 +139,7 @@ public class Player {
 			ret = "ENTRA: ";
 		}
 		// if (isHasPlayed()) {
-		ret += name + " (" + squadra + ") ->" + globalVote + nl;
+		ret += name + " (" + squadra + ") ->" + getGlobalVote() + nl;
 		ret += "\t voto: " + matchReport.toString() + nl + nl;
 		// }
 		return ret;
