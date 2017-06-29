@@ -7,6 +7,8 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import app.rules.Ruleset;
+
 /**
  * Copyright (C) 2008 Mirko Perillo
  * 
@@ -88,6 +90,10 @@ public class Player {
 		}
 
 		return globalVote;
+	}
+
+	public double getGlobalVote(Ruleset rules) {
+		return matchReport.getVote() + rules.apply(this);
 	}
 
 	public void setGlobalVote(double globalVote) {
