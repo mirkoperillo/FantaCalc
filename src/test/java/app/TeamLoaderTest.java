@@ -5,11 +5,17 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import app.model.Player;
 
 public class TeamLoaderTest {
+
+	@BeforeClass
+	public static void setup() {
+		System.setProperty("user.dir", "/home/mirko/personal/FantaCalc/src/test/resources");
+	}
 
 	@Test
 	public void caricamentoUnDato() throws URISyntaxException {

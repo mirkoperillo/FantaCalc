@@ -1,6 +1,7 @@
 package app;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import app.model.Player;
@@ -10,6 +11,11 @@ import app.rules.impl.GoalsRule;
 import app.rules.impl.YellowCardRule;
 
 public class PlayerTest {
+
+	@BeforeClass
+	public static void setup() {
+		System.setProperty("user.dir", "/home/mirko/personal/FantaCalc/src/test/resources");
+	}
 
 	@Test
 	public void yellowCardPlayer() {

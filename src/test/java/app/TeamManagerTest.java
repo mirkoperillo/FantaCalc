@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import app.model.Player;
@@ -13,9 +14,11 @@ import app.model.PlayerReport;
 
 public class TeamManagerTest {
 
-	/*
-	 * TEST 1
-	 */
+	@BeforeClass
+	public static void setup() {
+		System.setProperty("user.dir", "/home/mirko/personal/FantaCalc/src/test/resources");
+	}
+
 	@Test
 	public void calculate() {
 		TeamManager completer = new TeamManager(new DummieMatchManager());
