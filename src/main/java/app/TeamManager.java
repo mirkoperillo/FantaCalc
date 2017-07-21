@@ -17,6 +17,8 @@ public class TeamManager {
 
 	private MatchDataManager matchDataManager;
 
+	private DefaultRuleManager ruleManager = new DefaultRuleManager();
+
 	public TeamManager(MatchDataManager dataManager) {
 		this.matchDataManager = dataManager;
 	}
@@ -45,7 +47,7 @@ public class TeamManager {
 
 		for (Player player : regularTeam) {
 			if (player.isHasPlayed()) {
-				score += player.getGlobalVote();
+				score += player.getGlobalVote(ruleManager.getRuleset());
 			} else if (substitutionSlots > 0) {
 				substitutions.add(player.getRole());
 				logger.info("Esce: " + player.getName());
@@ -61,7 +63,7 @@ public class TeamManager {
 					.findFirst();
 			if (substitutePlayer.isPresent()) {
 				substitutePlayer.get().setHasIncome(true);
-				score += substitutePlayer.get().getGlobalVote();
+				score += substitutePlayer.get().getGlobalVote(ruleManager.getRuleset());
 				logger.info("Entra: " + substitutePlayer.get().getName());
 
 			}
